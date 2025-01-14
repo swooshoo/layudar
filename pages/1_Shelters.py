@@ -29,53 +29,52 @@ def load_inventory_graph(response_data):
 
 def render_shelter(shelter, city, address, email, opening_hour, closing_hour, phone_number):
     # Display the header with the divider color
-    st.subheader(shelter.title())
-    st.markdown(f"**:blue-background[{city}]**")
-    st.markdown(f"**:blue-background[{opening_hour} to {closing_hour}]**")
-    tab1, tab2, tab3 = st.tabs(["Needs & Extras", "Reach Us", "Full Inventory"])
-    with tab1:
-        col1, col2 = st.columns(2,gap="small",)
-        with col1:
+    with st.container(border=True):
+        st.subheader(shelter.title())
+        st.markdown(f"**:blue-background[{city}]**")
+        st.markdown(f"**:blue-background[{opening_hour} to {closing_hour}]**")
+        tab1, tab2, tab3 = st.tabs(["Needs & Extras", "Reach Us", "Full Inventory"])
+        with tab1:
+            col1, col2 = st.columns(2,gap="small",)
+            with col1:
+                st.write(f"**:red-background[Needs:]**")
+                st.write(f"**:green-background[Can Spare:]**")                     
+            with col2:
+                st.write("Hygiene Products")
+                st.write("Clothes")
             
-            st.write(f"**:red-background[Needs:]**")
-            st.write(f"**:green-background[Can Spare:]**")                     
-        with col2:
-            
-            st.write("Hygiene Products")
-            st.write("Clothes")
+        # Tab 2: Display unit ability
+        with tab2:
+            st.markdown(f"**Directory:**")
+            st.markdown(f"{address}")
+            st.markdown(f"{email}")
+            st.markdown(f"{phone_number}")
 
-    # Tab 2: Display unit ability
-    with tab2:
-        st.markdown(f"**Directory:**")
-        st.markdown(f"{address}")
-        st.markdown(f"{email}")
-        st.markdown(f"{phone_number}")
-
-    with tab3:
-        df = pd.DataFrame(
-            {
-                "name": ["Water", "Food", "Clothes", "Hygiene Products", "Feminine Products"],
-                "count": [random.randint(0, 1000) for _ in range(5)],
-                "count_history": [[random.randint(0, 5000) for _ in range(7)] for _ in range(5)],
-            }
-        )
-        
-        st.dataframe(
-        df,
-        column_config={
-            "name": "Item",
-            "count": st.column_config.NumberColumn(
-                "Count",
-                help="Number of units of Item",
-                format="%d",
-            ),
-            "count_history": st.column_config.BarChartColumn(
-                "Count (past 7 days)", y_min=0, y_max=5000
-            ),
-        },
-        hide_index=True,
-) 
-    st.subheader(" ", divider="gray")
+        with tab3:
+            df = pd.DataFrame(
+                {
+                    "name": ["Water", "Food", "Clothes", "Hygiene Products", "Feminine Products"],
+                    "count": [random.randint(0, 500) for _ in range(5)],
+                    "count_history": [[random.randint(0, 500) for _ in range(7)] for _ in range(5)],
+                }
+            )
+            #mock data
+            st.dataframe(
+            df,
+            column_config={
+                "name": "Item",
+                "count": st.column_config.NumberColumn(
+                    "Count",
+                    help="Number of units of Item",
+                    format="%d",
+                ),
+                "count_history": st.column_config.BarChartColumn(
+                    "Count (past 7 days)", y_min=0, y_max=5000
+                ),
+            },
+            hide_index=True,
+    ) 
+    #st.subheader(" ", divider="gray")
 
     
 def main():
