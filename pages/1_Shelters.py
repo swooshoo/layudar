@@ -5,6 +5,7 @@ from datetime import datetime
 
 st.set_page_config(
     page_title="Shelters",
+    page_icon="logo.png",
 )
 def load_response_data(responses_file_path):
     response_data = pd.read_csv(
@@ -87,10 +88,10 @@ def render_shelter(shelter, city, address, email, opening_hour, closing_hour, ph
             # Call the helper function to get the latest status
         status_msg = status_update(shelter, response_df, status_msg)
             # Display the status update
-        st.markdown(f"**{shelter} says:**")
+        #t.markdown(f"**{shelter} says:**")
         st.warning(f"{status_msg}",icon="📣")   
 
-        tab1, tab2, tab3 = st.tabs(["Daily Status Update", "Reach Us", "Full Inventory"])
+        tab1, tab2, tab3 = st.tabs(["At A Glance", "Reach Us", "Supplies"])
         
         with tab1:
             daily_priorities_and_excess(shelter, response_df,today_date)

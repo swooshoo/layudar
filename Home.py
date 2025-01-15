@@ -4,9 +4,9 @@ import pandas as pd
 # Displaying some content in Home.py
 
 st.set_page_config(
-    page_title="TFT Carousel",
-    page_icon="static/tft_icon.png",
-) 
+    page_title="LA Fire Shelters & Donations",
+    page_icon="logo.png",
+)   
 
 st.title("Home Page")
 st.text("An introduction for anyone curious about fires!")
