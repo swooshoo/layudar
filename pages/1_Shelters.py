@@ -9,10 +9,10 @@ st.set_page_config(
 def load_response_data(responses_file_path):
     response_data = pd.read_csv(
         responses_file_path, skiprows=1,
-        usecols=range(21),
+        usecols=range(22),
         names =["date", "email", "shelter", "water_count", "water_is_prio", "water_is_excess", "food_count", "food_is_prio", "food_is_excess", "cloth_count", "cloth_is_prio", "cloth_is_excess", 
                "hyg_count", "hyg_is_prio", "hyg_is_excess", "fem_count",
-               "fem_is_prio", "fem_is_excess", "card_count", "card_is_prio", "card_is_excess"]
+               "fem_is_prio", "fem_is_excess", "card_count", "card_is_prio", "card_is_excess", "status"]
     )
     return response_data
 
@@ -22,6 +22,24 @@ def load_directory_data(directory_file_path):
         names=["shelter_name", "city", "address", "email", "opening_hour", "closing_hour", "phone_number"]
     )
     return directory_data
+
+def status_update(shelter, response_df, status_msg=""):
+    # Filter the response dataframe for the given shelter
+    shelter_data = response_df[response_df['shelter'] == shelter]
+    
+    # Convert the 'date' column to datetime format, and handle errors in conversion
+    shelter_data['date'] = pd.to_datetime(shelter_data['date'], errors='coerce')
+    
+    # Find the latest entry by date
+    latest_entry = shelter_data[shelter_data['date'] == shelter_data['date'].max()]
+
+    # Check if we have any valid data for the shelter
+    if not latest_entry.empty:
+        status_msg = latest_entry.iloc[0]['status']
+    else:
+        status_msg = "No status available for today."
+    
+    return status_msg
 
 def daily_priorities_and_excess(shelter, df, today_date):
     categories = ['water', 'food', 'cloth', 'hyg', 'fem', 'card']
@@ -51,56 +69,62 @@ def daily_priorities_and_excess(shelter, df, today_date):
             priority = [category_labels[cat] for cat in categories if data_row[f'{cat}_is_prio'].strip().lower() == 'yes']
             excess = [category_labels[cat] for cat in categories if data_row[f'{cat}_is_excess'].strip().lower() == 'yes']
             
-            st.markdown(f"**:red-background[{', '.join(priority)}]**")
-            st.markdown(f"**:green-background[{', '.join(excess)}]**")
-
-
+            #st.markdown(f"**:red-background[{', '.join(priority)}]**")
+            #st.markdown(f"**:green-background[{', '.join(excess)}]**")
+            
+            st.error(f"{', '.join(priority)}", icon="🚨")
+            st.success(f"{', '.join(excess)}", icon="✅")
 
 def render_shelter(shelter, city, address, email, opening_hour, closing_hour, phone_number, response_df, today_date):
     # Display the header with the divider color
-  with st.container(border=True):
-    st.subheader(shelter)
-    st.markdown(f"**:blue-background[{city}, CA]**")
-    st.markdown(f"**:blue-background[{opening_hour} to {closing_hour}]**")
-    
-    daily_priorities_and_excess(shelter, response_df,today_date)
-
-    tab1, tab2, tab3 = st.tabs(["Daily Status Update", "Reach Us", "Full Inventory"])
-
-    with tab1:
-        st.write("Custom Message Here")
-        st.write(f"Updated as of {(today_date)}")
-    # Tab 2: Display unit ability
-    with tab2:
-        st.markdown(f"**Directory:**")
-        st.markdown(f"{address}")
-        st.markdown(f"{email}")
-        st.markdown(f"{phone_number}")
-
-    with tab3:
-        df = pd.DataFrame(
-            {
-                "name": ["Water", "Food", "Clothes", "Hygiene Products", "Feminine Products", "Gift Cards"],
-                "count": [random.randint(0, 1000) for _ in range(6)],
-                "count_history": [[random.randint(0, 5000) for _ in range(7)] for _ in range(6)],
-            }
-        )
+    with st.container(border=True):
+        st.subheader(shelter)
+        #st.markdown(f"**:blue-background[{city}, CA] | {opening_hour} to {closing_hour}**")
+        st.markdown(f"{city}, CA | {opening_hour} to {closing_hour}")
         
-        st.dataframe(
-        df,
-        column_config={
-            "name": "Item",
-            "count": st.column_config.NumberColumn(
-                "Count",
-                help="Number of units of Item",
-                format="%d",
-            ),
-            "count_history": st.column_config.BarChartColumn(
-                "Count (past 7 days)", y_min=0, y_max=5000
-            ),
-        },
-        hide_index=True,
-) 
+        # Initialize an empty string for status message
+        status_msg = ""
+            # Call the helper function to get the latest status
+        status_msg = status_update(shelter, response_df, status_msg)
+            # Display the status update
+        st.markdown(f"**{shelter} says:**")
+        st.warning(f"{status_msg}",icon="📣")   
+
+        tab1, tab2, tab3 = st.tabs(["Daily Status Update", "Reach Us", "Full Inventory"])
+        
+        with tab1:
+            daily_priorities_and_excess(shelter, response_df,today_date)
+        # Tab 2: Display unit ability
+        with tab2:
+            st.markdown(f"**Directory:**")
+            st.markdown(f"{address}")
+            st.markdown(f"{email}")
+            st.markdown(f"{phone_number}")
+
+        with tab3:
+            df = pd.DataFrame(
+                {
+                    "name": ["Water", "Food", "Clothes", "Hygiene Products", "Feminine Products", "Gift Cards"],
+                    "count": [random.randint(0, 1000) for _ in range(6)],
+                    "count_history": [[random.randint(0, 5000) for _ in range(7)] for _ in range(6)],
+                }
+            )
+            
+            st.dataframe(
+                df,
+                column_config={
+                    "name": "Item",
+                    "count": st.column_config.NumberColumn(
+                        "Count",
+                        help="Number of units of Item",
+                        format="%d",
+                    ),
+                    "count_history": st.column_config.BarChartColumn(
+                        "Count (past 7 days)", y_min=0, y_max=5000
+                    ),
+                },
+                hide_index=True,
+            ) 
 
 def main():
     # Load data
