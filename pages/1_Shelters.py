@@ -58,6 +58,7 @@ def daily_priorities_and_excess(shelter, df, today_date):
 
 def render_shelter(shelter, city, address, email, opening_hour, closing_hour, phone_number, response_df, today_date):
     # Display the header with the divider color
+  with st.container(border=True):
     st.subheader(shelter)
     st.markdown(f"**:blue-background[{city}, CA]**")
     st.markdown(f"**:blue-background[{opening_hour} to {closing_hour}]**")
@@ -100,9 +101,7 @@ def render_shelter(shelter, city, address, email, opening_hour, closing_hour, ph
         },
         hide_index=True,
 ) 
-    st.subheader(" ", divider="gray")
 
-    
 def main():
     # Load data
     response_data = load_response_data("./masterShelterResponse.csv")
