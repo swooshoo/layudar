@@ -11,6 +11,9 @@ st.set_page_config(
 st.title("Home Page")
 st.text("An introduction for anyone curious about fires!")
 st.warning('This is a warning', icon="⚠️")
+st.info('This is a purely informational message', icon="ℹ️")
+st.error('This is an error', icon="🚨")
+st.success('This is a success message!', icon="✅")
 
 st.markdown(
 
