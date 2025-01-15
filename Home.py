@@ -10,6 +10,7 @@ st.set_page_config(
 
 st.title("Home Page")
 st.text("An introduction for anyone curious about fires!")
+st.warning('This is a warning', icon="⚠️")
 
 st.markdown(
 

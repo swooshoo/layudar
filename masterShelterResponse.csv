@@ -1,4 +1,4 @@
-date,email,shelter,water_count,water_is_prio,water_is_excess,cloth_count,cloth_is_prio,cloth_is_excess,hyg_count,hyg_is_prio,hyg_excess,fem_count,fem_is_prio,fem_is_excess,card_count,card_is_prio,card_is_excess
-1/13/2025 23:42:00,elee305@ucr.edu,The House LA,56,Yes,No,78,Yes,No,108,No,No,50,Yes,No,25,No,Yes
-1/13/2025 23:53:51,elee305@ucr.edu,Van Nuys Rec Center,300,No,Yes,76,No,Yes,42,No,Yes,17,Yes,No,53,No,No
-1/13/2025 23:53:51,elee305@ucr.edu,Canoga Park Rec Center,72,No,Yes,80,No,Yes,50,No,No,28,Yes,No,29,No,No
+date,email,shelter,water_count,water_is_prio,water_is_excess,food_count, food_is_prio, food_is_excess, cloth_count,cloth_is_prio,cloth_is_excess,hyg_count,hyg_is_prio,hyg_excess,fem_count,fem_is_prio,fem_is_excess,card_count,card_is_prio,card_is_excess
+1/14/2025 23:42:00,elee305@ucr.edu,The House LA,56,Yes,No,78,Yes,No,108,No,No,50,Yes,No,25,No,Yes,200,Yes,No
+1/14/2025 23:53:51,elee305@ucr.edu,Van Nuys Rec Center,300,No,Yes,76,No,Yes,42,No,Yes,17,Yes,No,53,No,No,128,Yes,No
+1/14/2025 23:53:51,elee305@ucr.edu,Canoga Park Rec Center,72,No,Yes,80,No,Yes,50,No,No,28,Yes,No,29,No,No,300,Yes,No
