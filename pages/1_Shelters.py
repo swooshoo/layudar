@@ -72,9 +72,46 @@ def daily_priorities_and_excess(shelter, df, today_date):
             
             #st.markdown(f"**:red-background[{', '.join(priority)}]**")
             #st.markdown(f"**:green-background[{', '.join(excess)}]**")
-            
-            st.error(f"{', '.join(priority)}", icon="🚨")
             st.success(f"{', '.join(excess)}", icon="✅")
+            st.error(f"{', '.join(priority)}", icon="🚨")
+            
+def generate_weekly_df(shelter, response_df, today_date):
+    # Define the category labels for clarity
+    category_labels = {
+        'water_count': 'Water',
+        'food_count': 'Food',
+        'cloth_count': 'Clothes',
+        'hyg_count': 'Hygiene Products',
+        'fem_count': 'Feminine Products',
+        'card_count': 'Gift Cards'
+    }
+    
+    # Filter data for the specified shelter and the last 7 days
+    last_7_days_data = response_df[
+        (response_df['shelter'] == shelter) &
+        (pd.to_datetime(response_df['date'], errors='coerce').dt.date >= today_date - pd.Timedelta(days=6))
+    ]
+
+    # Prepare the counts and history for the dataframe
+    weekly_counts = {}
+    count_history = {label: [] for label in category_labels.values()}
+
+    for index, row in last_7_days_data.iterrows():
+        for col, label in category_labels.items():
+            count_history[label].append(row[col])  # Collect count data
+
+    # Generate the most recent count as the latest entry for each item
+    for col, label in category_labels.items():
+        most_recent_count = last_7_days_data.iloc[-1][col] if not last_7_days_data.empty else 0
+        weekly_counts[label] = most_recent_count
+
+    # Convert data into a DataFrame for Streamlit
+    weekly_df = pd.DataFrame({
+        "name": list(category_labels.values()),
+        "count": [weekly_counts[label] for label in category_labels.values()],
+        "count_history": [count_history[label] for label in category_labels.values()]
+    })
+    return weekly_df
 
 def render_shelter(shelter, city, address, email, opening_hour, closing_hour, phone_number, response_df, today_date):
     # Display the header with the divider color
@@ -103,28 +140,29 @@ def render_shelter(shelter, city, address, email, opening_hour, closing_hour, ph
             st.markdown(f"{phone_number}")
 
         with tab3:
-            df = pd.DataFrame(
-                {
-                    "name": ["Water", "Food", "Clothes", "Hygiene Products", "Feminine Products", "Gift Cards"],
-                    "count": [random.randint(0, 1000) for _ in range(6)],
-                    "count_history": [[random.randint(0, 5000) for _ in range(7)] for _ in range(6)],
-                }
-            )
+            weekly_df = generate_weekly_df(shelter, response_df, today_date)
             
             st.dataframe(
-                df,
+                weekly_df,
                 column_config={
-                    "name": "Item",
+                    "name": st.column_config.TextColumn(
+                        "Item",
+                        disabled=True,
+                    ),
                     "count": st.column_config.NumberColumn(
                         "Count",
                         help="Number of units of Item",
+                        disabled=True,
                         format="%d",
                     ),
                     "count_history": st.column_config.BarChartColumn(
-                        "Count (past 7 days)", y_min=0, y_max=5000
+                        "Count (past 7 days)",
+                        y_min=0, 
+                        y_max=400,
                     ),
                 },
                 hide_index=True,
+                on_select="ignore",
             ) 
 
 def main():
