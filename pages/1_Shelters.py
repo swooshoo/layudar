@@ -1,12 +1,15 @@
 import pandas as pd
 import streamlit as st
 import random
+import gspread
+from google.oauth2.service_account import Credentials
 from datetime import datetime
 
 st.set_page_config(
     page_title="Shelters",
     page_icon="logo.png",
 )
+
 def load_response_data(responses_file_path):
     response_data = pd.read_csv(
         responses_file_path, skiprows=1,
