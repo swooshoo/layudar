@@ -43,6 +43,7 @@ COLUMN_MAPPING = {
     "Food Count": "food_count" ,
     "Is Food a priority?": "food_is_prio",
     "Is Food in excess?": "food_is_excess",
+    "Status": "status",
 }
 
 # Rename columns for consistent internal usage
@@ -66,7 +67,9 @@ def status_update(shelter, response_df, status_msg=""):
 
     # Check if we have any valid data for the shelter
     if not latest_entry.empty:
-        status_msg = latest_entry.iloc[0]["water_is_prio"]  # Example: Adjust column as needed
+        status_msg = latest_entry.iloc[0]["status"]  # Example: Adjust column as needed
+        if pd.isna(status_msg):  
+            status_msg = "NaN status available for today."  # Default message for NaN
     else:
         status_msg = "No status available for today."
     
