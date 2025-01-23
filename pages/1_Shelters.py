@@ -4,20 +4,57 @@ import random
 import gspread
 from google.oauth2.service_account import Credentials
 from datetime import datetime
+from streamlit_gsheets import GSheetsConnection
+
 
 st.set_page_config(
     page_title="Shelters",
     page_icon="logo.png",
 )
 
-def load_response_data(responses_file_path):
-    response_data = pd.read_csv(
-        responses_file_path, skiprows=1,
-        usecols=range(22),
-        names =["date", "email", "shelter", "water_count", "water_is_prio", "water_is_excess", "food_count", "food_is_prio", "food_is_excess", "cloth_count", "cloth_is_prio", "cloth_is_excess", 
-               "hyg_count", "hyg_is_prio", "hyg_is_excess", "fem_count",
-               "fem_is_prio", "fem_is_excess", "card_count", "card_is_prio", "card_is_excess", "status"]
-    )
+def load_response_data():
+    # Create a connection object.
+    conn = st.connection("gsheets", type=GSheetsConnection)
+
+    # Read the Google Sheet data with a caching mechanism to refresh every 10 seconds.
+    response_data = conn.read(ttl="10s")
+    
+    # response_data = pd.read_csv(
+    #     responses_file_path, skiprows=1,
+    #     usecols=range(22),
+    #     names =["date", "email", "shelter", "water_count", "water_is_prio", "water_is_excess", "food_count", "food_is_prio", "food_is_excess", "cloth_count", "cloth_is_prio", "cloth_is_excess", 
+    #            "hyg_count", "hyg_is_prio", "hyg_is_excess", "fem_count",
+    #            "fem_is_prio", "fem_is_excess", "card_count", "card_is_prio", "card_is_excess", "status"]
+    # )
+    
+    # Column mappings
+    COLUMN_MAPPING = {
+        "DOUBLE CHECK: Choose Your Shelter": "shelter",
+        "Timestamp": "date",
+        "Water Bottle Count": "water_count",
+        "Is Water a priority?": "water_is_prio",
+        "Is Water an excess?": "water_is_excess",
+        "Clothes Count":  "cloth_count",
+        "Is Clothes a priority?": "cloth_is_prio",
+        "Is Clothes in excess?": "cloth_is_excess",
+        "Hygiene Products Count": "hyg_count",
+        "Are Hygiene Products a priority?": "hyg_is_prio",
+        "Are Hygiene Products in excess?": "hyg_is_excess",
+        "Feminine Products Count": "fem_count",
+        "Are Feminine Products a priority?": "fem_is_prio",
+        "Are Feminine Products in Excess?": "fem_is_excess",
+        "Gift Card Count": "card_count",
+        "Are Gift Cards a priority?": "card_is_prio",
+        "Are Gift Cards in excess?": "card_is_excess",
+        "Food Count": "food_count" ,
+        "Is Food a priority?": "food_is_prio",
+        "Is Food in excess?": "food_is_excess",
+        "Status": "status",
+    }
+
+    # Rename columns for consistent internal usage
+    response_data.rename(columns=COLUMN_MAPPING, inplace=True)
+
     return response_data
 
 def load_directory_data(directory_file_path):
@@ -29,17 +66,19 @@ def load_directory_data(directory_file_path):
 
 def status_update(shelter, response_df, status_msg=""):
     # Filter the response dataframe for the given shelter
-    shelter_data = response_df[response_df['shelter'] == shelter]
+    shelter_data = response_df[response_df["shelter"] == shelter]
     
     # Convert the 'date' column to datetime format, and handle errors in conversion
-    shelter_data['date'] = pd.to_datetime(shelter_data['date'], errors='coerce')
+    shelter_data["date"] = pd.to_datetime(shelter_data["date"], errors="coerce")
     
     # Find the latest entry by date
-    latest_entry = shelter_data[shelter_data['date'] == shelter_data['date'].max()]
+    latest_entry = shelter_data[shelter_data["date"] == shelter_data["date"].max()]
 
     # Check if we have any valid data for the shelter
     if not latest_entry.empty:
-        status_msg = latest_entry.iloc[0]['status']
+        status_msg = latest_entry.iloc[0]["status"]  # Example: Adjust column as needed
+        if pd.isna(status_msg):  
+            status_msg = "NaN status available for today."  # Default message for NaN
     else:
         status_msg = "No status available for today."
     
@@ -170,7 +209,7 @@ def render_shelter(shelter, city, address, email, opening_hour, closing_hour, ph
 
 def main():
     # Load data
-    response_data = load_response_data("./masterShelterResponse.csv")
+    response_data = load_response_data()
     directory_data = load_directory_data("./directory.csv")
     today = datetime.today().date()
     st.write(f"{today}")
