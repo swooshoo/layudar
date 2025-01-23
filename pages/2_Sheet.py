@@ -145,17 +145,18 @@ def main():
             if i + j < len(directory_data):
                 row = directory_data.iloc[i + j]
                 with col:
-                    render_shelter(
-                        shelter=row['shelter_name'],
-                        city=row['city'],
-                        address=row['address'],
-                        email=row['email'],
-                        opening_hour=row['opening_hour'],
-                        closing_hour=row['closing_hour'],
-                        phone_number=row['phone_number'],
-                        response_df=df,
-                        today_date=today
-                    )
+                    with st.container(border=True):
+                        render_shelter(
+                            shelter=row['shelter_name'],
+                            city=row['city'],
+                            address=row['address'],
+                            email=row['email'],
+                            opening_hour=row['opening_hour'],
+                            closing_hour=row['closing_hour'],
+                            phone_number=row['phone_number'],
+                            response_df=df,
+                            today_date=today
+                        )
 
 if __name__ == "__main__":
     main()
