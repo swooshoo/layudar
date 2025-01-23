@@ -8,7 +8,8 @@ st.set_page_config(
     page_icon="logo.png",
 )   
 
-st.title("LAyudar - Actual Resources for Local LA Fire Relief")
+st.title("LAyudar")
+st.header("A Centralized Resource for LA Fire Relief")
 
 with st.container(border=True):
     st.subheader("Mission Statement", divider="gray")
