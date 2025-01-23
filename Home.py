@@ -8,12 +8,14 @@ st.set_page_config(
     page_icon="logo.png",
 )   
 
-st.title("LAyudar - Inventory Tracker for Local LA Fire Relief")
+st.title("LAyudar - Actual Resources for Local LA Fire Relief")
 
 with st.container(border=True):
     st.subheader("Mission Statement", divider="gray")
     st.markdown(
         '''
+        We saw a need to centralize all of the available legitimate and local resources out there for emergency relief, volunteer opportunities, and etc.
+        
         Streamlining disaster relief efforts, **LAyudar** connects communities with local shelters, donation centers, and food banks in need. 
         By gathering real-time inventory updates through daily Google Form submissions, we ensure accurate and centralized information for donors and volunteers.
         Together, we make it easier to support emergency response and recovery. 
@@ -38,5 +40,7 @@ with st.container(border=True):
     Inspired by WatchDuty, ***THIS WEBSITE WILL NEVER BE MONETIZED***. 
 
     Our website will not handle any sort of online donations. You can find donation links in our Other Resource page.
+    
+    We are open to feedback and scaling. We would love to hear your thoughts!
     ''')
     

@@ -8,7 +8,7 @@ from streamlit_gsheets import GSheetsConnection
 
 
 st.set_page_config(
-    page_title="LAyudar - Inv Tracker",
+    page_title="📊 LAyudar - Inv Tracker",
     page_icon="logo.png",
 )
 
