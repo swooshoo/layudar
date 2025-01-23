@@ -8,17 +8,33 @@ st.set_page_config(
     page_icon="logo.png",
 )   
 
-st.title("Home Page")
-st.text("An introduction for anyone curious about fires!")
-st.warning('This is a warning', icon="⚠️")
-st.info('This is a purely informational message', icon="ℹ️")
-st.error('This is an error', icon="🚨")
-st.success('This is a success message!', icon="✅")
+st.title("LA Fire: Inventory Tracker")
+with st.container(border=True):
+    st.subheader("Mission Statement", divider="gray")
+    st.markdown(
+        '''
+        Streamlining disaster relief efforts, our platform connects communities with local shelters, donation centers, and food banks in need. 
+        By gathering real-time inventory updates through daily Google Form submissions, we ensure accurate and centralized information for donors and volunteers.
+        Together, we make it easier to support emergency response and recovery. 
+        
+        ***Click the Shelters page to get started!***
+        '''
+    )
 
-st.markdown(
+with st.container(border=True):
+    st.subheader("Don't See Your Shelter?", divider="gray")
+    st.markdown(
+        '''
+        Share this interest form so our team can vet and add your local shelter!
+        '''
+    )
+    st.link_button("👉 Go to Sign-Up Form ", "https://forms.gle/1GNyKspTSEdmoW6Z7")
 
-    '''
-    :wrench: This page is still under production! :wrench:
+with st.container(border=True):
+    st.subheader("FAQS", divider="gray")
+    st.markdown('''
+    Inspired by WatchDuty, ***THIS WEBSITE WILL NEVER BE MONETIZED***. 
 
-    '''
-)
+    Our website will not handle any sort of online donations. You can find donation links in our Other Resource page.
+    ''')
+    

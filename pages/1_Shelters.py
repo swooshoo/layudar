@@ -19,14 +19,6 @@ def load_response_data():
     # Read the Google Sheet data with a caching mechanism to refresh every 10 seconds.
     response_data = conn.read(ttl="10s")
     
-    # response_data = pd.read_csv(
-    #     responses_file_path, skiprows=1,
-    #     usecols=range(22),
-    #     names =["date", "email", "shelter", "water_count", "water_is_prio", "water_is_excess", "food_count", "food_is_prio", "food_is_excess", "cloth_count", "cloth_is_prio", "cloth_is_excess", 
-    #            "hyg_count", "hyg_is_prio", "hyg_is_excess", "fem_count",
-    #            "fem_is_prio", "fem_is_excess", "card_count", "card_is_prio", "card_is_excess", "status"]
-    # )
-    
     # Column mappings
     COLUMN_MAPPING = {
         "DOUBLE CHECK: Choose Your Shelter": "shelter",
@@ -78,7 +70,7 @@ def status_update(shelter, response_df, status_msg=""):
     if not latest_entry.empty:
         status_msg = latest_entry.iloc[0]["status"]  # Example: Adjust column as needed
         if pd.isna(status_msg):  
-            status_msg = "NaN status available for today."  # Default message for NaN
+            status_msg = "No status available for today."  # Default message for NaN
     else:
         status_msg = "No status available for today."
     
@@ -160,7 +152,7 @@ def render_shelter(shelter, city, address, email, opening_hour, closing_hour, ph
     with st.container(border=True):
         st.subheader(shelter)
         #st.markdown(f"**:blue-background[{city}, CA] | {opening_hour} to {closing_hour}**")
-        st.markdown(f"{city}, CA | {opening_hour} to {closing_hour}")
+        st.markdown(f":gray-background[{city}, CA] | {opening_hour} to {closing_hour}")
         
         # Initialize an empty string for status message
         status_msg = ""
