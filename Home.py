@@ -8,7 +8,7 @@ st.set_page_config(
     page_icon="logo.png",
 )   
 
-st.title("LAyuda - Inventory Tracker for Local LA Fire Relief")
+st.title("LAyudar - Inventory Tracker for Local LA Fire Relief")
 
 with st.container(border=True):
     st.subheader("Mission Statement", divider="gray")
