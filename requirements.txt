@@ -1,6 +1,4 @@
-pandas
-streamlit
-google-auth
-google-auth-oauthlib
-google-auth-httplib2
-streamlit-gsheets
+pandas==2.2.3
+protobuf==5.29.3
+st_gsheets_connection==0.1.0
+streamlit==1.40.1
