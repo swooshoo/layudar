@@ -1,3 +1,0 @@
-streamlit
-pandas
-streamlit_gsheets
