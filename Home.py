@@ -43,4 +43,5 @@ with st.container(border=True):
     
     We are open to feedback and scaling. We would love to hear your thoughts!
     ''')
+    st.link_button("👉 Go to Survey Form ", "https://forms.gle/rfRjcLDgXYAy8Ge49")
     
