@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 import random
+import gspread
 from google.oauth2.service_account import Credentials
 from datetime import datetime
 from streamlit_gsheets import GSheetsConnection
