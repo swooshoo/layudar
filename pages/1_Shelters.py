@@ -66,7 +66,7 @@ def status_update(shelter, response_df, status_msg=""):
     latest_entry = shelter_data[shelter_data["date"] == shelter_data["date"].max()]
 
     # Check if we have any valid data for the shelter
-    if not latest_entry.empty():
+    if not latest_entry.empty:
         status_msg = latest_entry.iloc[0]["status"]  # Example: Adjust column as needed
         if pd.isna(status_msg):  
             status_msg = "No status available for today."  # Default message for NaN
