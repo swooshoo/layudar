@@ -1,0 +1,5 @@
+streamlit
+pandas
+google.oauth2.service_account
+datetime
+streamlit_gsheets
