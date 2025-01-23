@@ -4,22 +4,24 @@ import pandas as pd
 # Displaying some content in Home.py
 
 st.set_page_config(
-    page_title="LA Fire Shelters & Donations",
+    page_title="LAyudar - Home",
     page_icon="logo.png",
 )   
 
-st.title("LA Fire: Inventory Tracker")
+st.title("LAyuda - Inventory Tracker for Local LA Fire Relief")
+
 with st.container(border=True):
     st.subheader("Mission Statement", divider="gray")
     st.markdown(
         '''
-        Streamlining disaster relief efforts, our platform connects communities with local shelters, donation centers, and food banks in need. 
+        Streamlining disaster relief efforts, **LAyudar** connects communities with local shelters, donation centers, and food banks in need. 
         By gathering real-time inventory updates through daily Google Form submissions, we ensure accurate and centralized information for donors and volunteers.
         Together, we make it easier to support emergency response and recovery. 
         
         ***Click the Shelters page to get started!***
         '''
     )
+    st.info("For beta purposes, we have used fake data for shelters & our shelter directory.")
 
 with st.container(border=True):
     st.subheader("Don't See Your Shelter?", divider="gray")
