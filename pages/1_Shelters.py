@@ -205,7 +205,7 @@ def main():
     directory_data = load_directory_data("./directory.csv")
     today = datetime.today().date()
     st.write(f"{today}")
-    st.header("Inventory Tracker", divider = "gray")
+    st.header("📊 LAyudar - Inv Tracker", divider = "gray")
     cols_per_row = 2 # Number of cards per row
     for i in range(0, len(directory_data), cols_per_row):
         cols = st.columns(cols_per_row)  # Create columns for each row
