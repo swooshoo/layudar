@@ -204,7 +204,9 @@ def main():
     response_data = load_response_data()
     directory_data = load_directory_data("./directory.csv")
     today = datetime.today().date()
-    st.write(f"{today}")
+    #st.write(f"{today}")
+    st.info("For beta purposes, we have used placeholder data for shelters & our shelter directory!")
+    
     st.header("📊 LAyudar - Inv Tracker", divider = "gray")
     cols_per_row = 2 # Number of cards per row
     for i in range(0, len(directory_data), cols_per_row):
