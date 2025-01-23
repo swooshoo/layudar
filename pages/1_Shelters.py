@@ -15,9 +15,9 @@ st.set_page_config(
 def load_response_data():
     # Create a connection object.
     conn = st.connection("gsheets", type=GSheetsConnection)
-
+    url = st.secrets.connections.gsheets.spreadsheet
     # Read the Google Sheet data with a caching mechanism to refresh every 10 seconds.
-    response_data = conn.read(ttl="10s")
+    response_data = conn.read(spreadsheet=url,ttl="10s")
     
     # Column mappings
     COLUMN_MAPPING = {
