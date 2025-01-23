@@ -7,7 +7,7 @@ from streamlit_gsheets import GSheetsConnection
 
 
 st.set_page_config(
-    page_title="Shelters",
+    page_title="LAyudar - Inv Tracker",
     page_icon="logo.png",
 )
 
@@ -204,7 +204,7 @@ def main():
     directory_data = load_directory_data("./directory.csv")
     today = datetime.today().date()
     st.write(f"{today}")
-    st.header("Los Angeles Based Shelters", divider = "gray")
+    st.header("Inventory Tracker", divider = "gray")
     cols_per_row = 2 # Number of cards per row
     for i in range(0, len(directory_data), cols_per_row):
         cols = st.columns(cols_per_row)  # Create columns for each row

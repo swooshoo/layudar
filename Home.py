@@ -4,7 +4,7 @@ import pandas as pd
 # Displaying some content in Home.py
 
 st.set_page_config(
-    page_title="LAyudar - Home",
+    page_title="🏠 LAyudar",
     page_icon="logo.png",
 )   
 
