@@ -192,7 +192,7 @@ def render_shelter(shelter, city, address, email, opening_hour, closing_hour, ph
                     "count_history": st.column_config.BarChartColumn(
                         "Count (past 7 days)",
                         y_min=0, 
-                        y_max=400,
+                        y_max=300,
                     ),
                 },
                 hide_index=True,
