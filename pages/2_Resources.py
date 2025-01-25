@@ -17,7 +17,8 @@ def main():
                 st.subheader("Organizations", divider="green")
                 st.link_button("LA Regional Food Bank", "https://secure.lafoodbank.org/site/Donation2?df_id=5221&mfc_pref=T&5221.donation=form1&c_src=pmax&c_src2=google-ads&gad_source=1&gclid=Cj0KCQiA7se8BhCAARIsAKnF3rw2b33NVNXsMqWUzx5E03Scala3xBgssC1bvS8jrXs945AGrD3TNbcaAtUvEALw_wcB")
                 st.link_button("LA Fire Department", "https://supportlafd.kindful.com/" )
-                
+                st.link_button("LA Arts | Hammer Musuem's Fire Relief Fund", "https://hammer.ucla.edu/la-arts-community-fire-relief-fund?ct=t(COMMS_20250115_LA%20Fire%20Community%20Announcement)")
+                st.link_button("SAGAFRTA Assistance Programs", "https://sagaftra.foundation/wildfire-emergency-resources/#")
         with col2:
             with st.container(border=True):
                 st.subheader("GoFundMe", divider="red")
