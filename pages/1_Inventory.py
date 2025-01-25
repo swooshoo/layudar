@@ -5,6 +5,8 @@ import gspread
 from google.oauth2.service_account import Credentials
 from datetime import datetime
 from streamlit_gsheets import GSheetsConnection
+from urllib.parse import unquote
+
 
 
 st.set_page_config(
@@ -151,7 +153,9 @@ def render_shelter(shelter, city, address, email, opening_hour, closing_hour, ph
     # Display the header with the divider color
     with st.container(border=True):
         st.subheader(shelter)
-        #st.markdown(f"**:blue-background[{city}, CA] | {opening_hour} to {closing_hour}**")
+        
+        map_url = unquote(map_url)
+        
         col1, col2 = st.columns(2)
         with col1:
             st.link_button(f" :material/location_city: {city}", url=f"{map_url}", type = "primary")
