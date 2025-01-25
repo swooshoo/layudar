@@ -171,7 +171,7 @@ def render_shelter(shelter, city, address, email, opening_hour, closing_hour, ph
 
         col1, col2 = st.columns(2)
         with col1:
-            st.link_button(f" :material/location_city: {city}", map_url, type = "primary", help=f"Link to the Google Map for {shelter}")
+            st.link_button(f" :material/location_city: {city}", map_url, type = "primary", help=f"View {shelter} on Google Maps")
         with col2:
             st.button(f"{opening_hour} - {closing_hour}", type="secondary", key=f"{shelter}_hours_button")
         
