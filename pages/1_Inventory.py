@@ -54,14 +54,22 @@ def load_response_data():
 def load_directory_data(directory_file_path):
     directory_data = pd.read_csv(
         directory_file_path, skiprows=1, usecols = range(8),
-        names=["shelter_name", "city", "address", "email", "opening_hour", "closing_hour", "phone_number", "map_url"]
+        names=["shelter_name", "city", "address", "email", "opening_hour", "closing_hour", "phone_number", "map_url"],
+        quotechar='"',  # Ensure quotes are respected
+        skipinitialspace=True
     )
+    
+    # Debug output to confirm the cleaned URLs
+    #print("Cleaned map_url values:")
+    #print(directory_data["map_url"])
+
     return directory_data
 
 def status_update(shelter, response_df, status_msg=""):
     # Filter the response dataframe for the given shelter
     shelter_data = response_df[response_df["shelter"] == shelter]
-    
+
+    shelter_data = shelter_data.copy()
     # Convert the 'date' column to datetime format, and handle errors in conversion
     shelter_data["date"] = pd.to_datetime(shelter_data["date"], errors="coerce")
     
@@ -154,13 +162,19 @@ def render_shelter(shelter, city, address, email, opening_hour, closing_hour, ph
     with st.container(border=True):
         st.subheader(shelter)
         
-        map_url = unquote(map_url)
-        
+        #map_url = unquote(map_url)
+        #map_url = unquote(map_url)
+
+        map_url = unquote(map_url).strip()  # Decode and remove whitespace
+        #if map_url.startswith('"') or map_url.endswith('"'):
+        #    map_url = map_url.strip('"') 
+
         col1, col2 = st.columns(2)
         with col1:
-            st.link_button(f" :material/location_city: {city}", url=f"{map_url}", type = "primary")
+            st.link_button(f" :material/location_city: {city}", map_url, type = "primary", help=f"Link to the Google Map for {shelter}")
         with col2:
-            st.button(f"{opening_hour} -{closing_hour}", type="secondary")
+            st.button(f"{opening_hour} - {closing_hour}", type="secondary", key=f"{shelter}_hours_button")
+        
         
         # Initialize an empty string for status message
         status_msg = ""
@@ -293,6 +307,9 @@ def main():
         for j, col in enumerate(cols):
             if i + j < len(directory_data):  # Ensure no out-of-bounds access
                 row = directory_data.iloc[i + j]
+
+                #st.write(f"Row {i + j} map_url: {row['map_url']}")
+                #print(f"Row {i + j} map_url: {row['map_url']}")  # Print to console
                 with col:
                     render_shelter(
                         shelter=row['shelter_name'],
@@ -304,7 +321,7 @@ def main():
                         phone_number=row['phone_number'],
                         response_df=response_data,
                         today_date=today,
-                        map_url=row['map_url']
+                        map_url=row["map_url"]
                     )
 
 if __name__ == "__main__":
