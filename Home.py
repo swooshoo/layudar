@@ -40,12 +40,4 @@ with st.container(border=True):
     )
     st.link_button("👉 Go to Sign-Up Form ", "https://forms.gle/1GNyKspTSEdmoW6Z7")
 
-with st.container(border=True):
-    st.subheader("FAQS", divider="gray")
-    st.markdown('''
-    Inspired by WatchDuty, ***THIS WEBSITE WILL NEVER BE MONETIZED***. 
-
-    Our website will not handle any sort of online donations. You can find donation links in our Community Resources page.
-    ''')
-    st.link_button("👉 Go to Survey Form ", "https://forms.gle/rfRjcLDgXYAy8Ge49")
     
