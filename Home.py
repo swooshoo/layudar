@@ -26,6 +26,8 @@ with st.container(border=True):
         Streamlining disaster relief efforts, **LAyudar** connects communities with local shelters, donation centers, and food banks in need. 
         By gathering real-time inventory updates through daily Google Form submissions, we ensure accurate and centralized information for donors and volunteers.
         Together, we make it easier to support emergency response and recovery. 
+        
+        Our name comes from a play on words from combining **Los Angeles** and the word **"ayudar"**, which means "to help" in Spanish.
         '''
     )
 
@@ -43,9 +45,7 @@ with st.container(border=True):
     st.markdown('''
     Inspired by WatchDuty, ***THIS WEBSITE WILL NEVER BE MONETIZED***. 
 
-    Our website will not handle any sort of online donations. You can find donation links in our Other Resource page.
-    
-    We are open to feedback and scaling. We would love to hear your thoughts!
+    Our website will not handle any sort of online donations. You can find donation links in our Community Resources page.
     ''')
     st.link_button("👉 Go to Survey Form ", "https://forms.gle/rfRjcLDgXYAy8Ge49")
     
