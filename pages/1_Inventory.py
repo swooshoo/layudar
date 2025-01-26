@@ -212,7 +212,7 @@ def render_shelter(shelter, city, address, email, opening_hour, closing_hour, ph
             st.markdown(f" :material/call: {phone_number}")
 
 def dropdown_tutorial():
-    with st.popover(":material/help: Getting Started", use_container_width=True):
+    with st.expander(":material/help: Getting Started"):
         with st.container(border=True):
             st.subheader("Site Name")
             col1, col2 = st.columns(2)
@@ -285,11 +285,14 @@ def main():
     directory_data = load_directory_data("./directory.csv")
     today = datetime.today().date()
     
-    st.info("For beta purposes, we have used placeholder data for shelters & our shelter directory!")
-    
-    st.header("📊 LAyudar - Inventory Tracker", divider = "gray")
+    homeicon, hometitle = st.columns([0.15,0.85])
+    with homeicon:
+        st.image("images/layudarlogo_large.png")
+    with hometitle:
+        st.header("Inventory Tracker", divider="gray")
     
     dropdown_tutorial() #call tutorial
+    st.info("For beta purposes, we have used placeholder data for shelters & our shelter directory!")
     
     cols_per_row = 2 # Number of cards per row
     for i in range(0, len(directory_data), cols_per_row):

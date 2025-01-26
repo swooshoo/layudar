@@ -9,7 +9,8 @@ st.set_page_config(
 sidebar_logo = "images/layudarlogo_big.png"
 st.logo(sidebar_logo, size = "large")
 
-homeicon, hometitle = st.columns([0.3,0.7])
+homeicon, hometitle = st.columns([0.25,0.75])
+
 with homeicon:
     st.image("images/layudarlogo_big.png")
 with hometitle:

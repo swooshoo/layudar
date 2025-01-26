@@ -6,14 +6,19 @@ sidebar_logo = "images/layudarlogo_big.png"
 st.logo(sidebar_logo, size = "large")
 
 st.set_page_config(
-    page_title="Other Resources",
+    page_title="Community Resources",
     page_icon="images/layudarlogo.png",
 )
 
 def main():
     with st.container():
-        st.header("💪 Other Resources", divider="gray")
-        st.caption("These resources have all been developed and added by the community! Feel free to explore the resources below!")
+        homeicon, hometitle = st.columns([0.15,0.85])
+        with homeicon:
+            st.image("images/layudarlogo_large.png")
+        with hometitle:
+            st.header("Community Resources", divider="gray")
+        st.caption("From local Google Sheets to national organizations, surf through this directory of online & local resources.")
+        
         col1, col2, col3 = st.columns(3)
         with col1:
             with st.container(border=True):
@@ -34,7 +39,14 @@ def main():
             with st.container(border=True):
                 st.subheader("Housing", divider="blue")
                 st.link_button("Dena Housing Guide", "https://docs.google.com/spreadsheets/d/1-XWt1RV3Svkejiv5I2HxZEQ5VrL_ejl40lqr0Mz2pcw/edit")
-            
+        with st.container(border=True):
+            st.subheader("Add a Community Resource", divider="gray")
+            st.markdown(
+                '''
+                Please share your known local and available resources with the Google Form below! 
+                '''
+            )
+            st.link_button("👉 Go to Google Form ", "https://forms.gle/bpyS8CQzmnbobYUf7")
 if __name__ == "__main__":  
     main()
     
