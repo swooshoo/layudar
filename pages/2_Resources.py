@@ -2,8 +2,8 @@ import pandas as pd
 import streamlit as st
 from datetime import datetime
 
-sidebar_logo = "images/layudarlogo_big.png"
-st.logo(sidebar_logo, size = "large")
+sidebar_logo = "images/layudarlogo_large.png"
+st.logo(sidebar_logo, size = "medium")
 
 st.set_page_config(
     page_title="Community Resources",
