@@ -159,31 +159,23 @@ def generate_weekly_df(shelter, response_df, today_date):
     return weekly_df
 
 def render_shelter(shelter, city, address, email, opening_hour, closing_hour, phone_number, response_df, today_date, map_url):
-    # Display the header with the divider color
     with st.container(border=True):
         st.subheader(shelter)
-        
-        #map_url = unquote(map_url)
-        #map_url = unquote(map_url)
 
-        map_url = unquote(map_url).strip()  # Decode and remove whitespace
+        map_url = unquote(map_url).strip()  
+        # Decode and remove whitespace
         #if map_url.startswith('"') or map_url.endswith('"'):
         #    map_url = map_url.strip('"') 
 
-        col1, col2 = st.columns(2)
-        with col1:
+        citybutton, timebutton = st.columns(2)
+        with citybutton:
             st.link_button(f" :material/location_city: {city}", map_url, type = "primary", help=f"View {shelter} on Google Maps")
-        with col2:
+        with timebutton:
             st.button(f"{opening_hour} - {closing_hour}", type="secondary", key=f"{shelter}_hours_button")
         
-        
-        # Initialize an empty string for status message
         status_msg = ""
-            # Call the helper function to get the latest status
-        status_msg = status_update(shelter, response_df, status_msg)
-            # Display the status update
-        #t.markdown(f"**{shelter} says:**")
-        st.warning(f"{status_msg}",icon="📣")   
+        status_msg = status_update(shelter, response_df, status_msg)    # Call the helper function to get the latest status
+        st.warning(f"{status_msg}",icon="📣")   # Display the status update
 
         tab1, tab2, tab3 = st.tabs(["**Overview**", "**Week**", "**Contact**"])
         
@@ -191,7 +183,6 @@ def render_shelter(shelter, city, address, email, opening_hour, closing_hour, ph
             daily_priorities_and_excess(shelter, response_df,today_date)
         with tab2:
             weekly_df = generate_weekly_df(shelter, response_df, today_date)
-            
             st.dataframe(
                 weekly_df,
                 column_config={
@@ -215,9 +206,8 @@ def render_shelter(shelter, city, address, email, opening_hour, closing_hour, ph
                 hide_index=True,
                 on_select="ignore",
             )
-            
+
         with tab3:
-            #st.markdown(f" :material/location_on: {address}")
             st.markdown(f" :material/mail: {email}")
             st.markdown(f" :material/call: {phone_number}")
 
@@ -225,7 +215,6 @@ def dropdown_tutorial():
     with st.popover(":material/help: Getting Started", use_container_width=True):
         with st.container(border=True):
             st.subheader("Site Name")
-            #st.markdown(f"**:blue-background[{city}, CA] | {opening_hour} to {closing_hour}**")
             col1, col2 = st.columns(2)
             with col1:
                 st.button(f" :material/location_city: City", type = "primary")
@@ -249,7 +238,6 @@ def dropdown_tutorial():
             with tab2:
                 col1, col2 = st.columns([0.6,0.4])
                 with col1:
-                    
                     df = pd.DataFrame(
                         {
                             "name": ["Water", "Food", "Clothes", "Hygiene Products", "Feminine Products", "Gift Cards"],
@@ -257,7 +245,6 @@ def dropdown_tutorial():
                             "count_history": [[random.randint(0, 5000) for _ in range(7)] for _ in range(6)],
                         }
                     )
-
                     st.dataframe(
                         df,
                         column_config={
@@ -279,28 +266,30 @@ def dropdown_tutorial():
                         },
                         hide_index=True,
                         on_select="ignore",
-                ) 
+                )
+                    
                 with col2:
                     st.caption("Count refers to the **latest number of items**. The Past 7 Days chart is to visualize a trend that donators can refer to as well!")
-                with tab3:
-                    contact, contact_caption = st.columns(2)
-                    with contact:
-                        st.markdown(f" :material/mail: Email")
-                        st.markdown(f" :material/call: Phone Number")
-                    with contact_caption:
-                        st.caption("Site-provided contact information!")
+                    
+            with tab3:
+                contact, contact_caption = st.columns(2)
+                with contact:
+                    st.markdown(f" :material/mail: Email")
+                    st.markdown(f" :material/call: Phone Number")
+                with contact_caption:
+                    st.caption("Site-provided contact information!")    
                 
 def main():
     # Load data
     response_data = load_response_data()
     directory_data = load_directory_data("./directory.csv")
     today = datetime.today().date()
-    #st.write(f"{today}")
+    
     st.info("For beta purposes, we have used placeholder data for shelters & our shelter directory!")
     
     st.header("📊 LAyudar - Inventory Tracker", divider = "gray")
     
-    dropdown_tutorial()
+    dropdown_tutorial() #call tutorial
     
     cols_per_row = 2 # Number of cards per row
     for i in range(0, len(directory_data), cols_per_row):
@@ -308,9 +297,6 @@ def main():
         for j, col in enumerate(cols):
             if i + j < len(directory_data):  # Ensure no out-of-bounds access
                 row = directory_data.iloc[i + j]
-
-                #st.write(f"Row {i + j} map_url: {row['map_url']}")
-                #print(f"Row {i + j} map_url: {row['map_url']}")  # Print to console
                 with col:
                     render_shelter(
                         shelter=row['shelter_name'],

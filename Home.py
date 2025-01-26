@@ -1,8 +1,6 @@
 import streamlit as st
 import pandas as pd
 
-# Displaying some content in Home.py
-
 st.set_page_config(
     page_title="Home - LAyudar",
     page_icon="images/layudarlogo.png",  
@@ -29,7 +27,6 @@ with st.container(border=True):
         Together, we make it easier to support emergency response and recovery. 
         '''
     )
-    #st.info("For beta purposes, we have used fake data for shelters & our shelter directory.")
 
 with st.container(border=True):
     st.subheader("Don't See A Site?", divider="gray")
