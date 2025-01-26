@@ -4,30 +4,35 @@ import pandas as pd
 # Displaying some content in Home.py
 
 st.set_page_config(
-    page_title="🏠 LAyudar",
-    page_icon="logo.png",
-)   
+    page_title="Home - LAyudar",
+    page_icon="images/layudarlogo.png",  
+)
 
-st.title("LAyudar")
-st.header("A Centralized Resource for LA Fire Relief")
+sidebar_logo = "images/layudarlogo_big.png"
+st.logo(sidebar_logo, size = "large")
+
+homeicon, hometitle = st.columns([0.3,0.7])
+with homeicon:
+    st.image("images/layudarlogo_big.png")
+with hometitle:
+    st.title("LAyudar")
+    st.subheader("A Centralized Resource for LA Fire Relief")
 
 with st.container(border=True):
     st.subheader("Mission Statement", divider="gray")
     st.markdown(
         '''
-        We saw a need to centralize all of the available legitimate and local resources out there for emergency relief, volunteer opportunities, and etc.
+        We saw a need to centralize all of the legitimate and local resources out there for emergency relief, volunteer opportunities, and etc.
         
         Streamlining disaster relief efforts, **LAyudar** connects communities with local shelters, donation centers, and food banks in need. 
         By gathering real-time inventory updates through daily Google Form submissions, we ensure accurate and centralized information for donors and volunteers.
         Together, we make it easier to support emergency response and recovery. 
-        
-        ***Click the Shelters page to get started!***
         '''
     )
-    st.info("For beta purposes, we have used fake data for shelters & our shelter directory.")
+    #st.info("For beta purposes, we have used fake data for shelters & our shelter directory.")
 
 with st.container(border=True):
-    st.subheader("Don't See Your Shelter?", divider="gray")
+    st.subheader("Don't See A Site?", divider="gray")
     st.markdown(
         '''
         Share this interest form so our team can vet and add your local shelter!

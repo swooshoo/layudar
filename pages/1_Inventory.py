@@ -7,11 +7,12 @@ from datetime import datetime
 from streamlit_gsheets import GSheetsConnection
 from urllib.parse import unquote
 
-
+sidebar_logo = "images/layudarlogo_big.png"
+st.logo(sidebar_logo, size = "large")
 
 st.set_page_config(
-    page_title="📊 LAyudar - Inv Tracker",
-    page_icon="logo.png",
+    page_title="Inventory Tracker",
+    page_icon="images/layudarlogo.png",
 )
 
 def load_response_data():
@@ -205,8 +206,8 @@ def render_shelter(shelter, city, address, email, opening_hour, closing_hour, ph
                         format="%d",
                     ),
                     "count_history": st.column_config.AreaChartColumn(
-                        "Count (Last 7 days)",
-                        width="small",
+                        "Trend",
+                        help="The supply of this item in the last 7 days.",
                         y_min=0, 
                         y_max=300,
                     ),

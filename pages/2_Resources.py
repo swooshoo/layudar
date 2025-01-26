@@ -2,15 +2,18 @@ import pandas as pd
 import streamlit as st
 from datetime import datetime
 
+sidebar_logo = "images/layudarlogo_big.png"
+st.logo(sidebar_logo, size = "large")
+
 st.set_page_config(
-    page_title="💪 Other Resources",
-    page_icon="logo.png",
+    page_title="Other Resources",
+    page_icon="images/layudarlogo.png",
 )
 
 def main():
     with st.container():
-        st.header("💪 Other Resources & Donation Links")
-        st.caption("These resources have all been developed by the community! Feel free to explore the resources below!")
+        st.header("💪 Other Resources", divider="gray")
+        st.caption("These resources have all been developed and added by the community! Feel free to explore the resources below!")
         col1, col2, col3 = st.columns(3)
         with col1:
             with st.container(border=True):
