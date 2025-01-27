@@ -171,7 +171,7 @@ def render_shelter(shelter, city, address, email, opening_hour, closing_hour, ph
         with citybutton:
             st.link_button(f" :material/location_city: {city}", map_url, type = "primary", help=f"View {shelter} on Google Maps")
         with timebutton:
-            st.button(f"{opening_hour} - {closing_hour}", type="secondary", key=f"{shelter}_hours_button")
+            st.button(f"{opening_hour} - {closing_hour}", type="secondary", key=f"{shelter}_hours_button",)
         
         status_msg = ""
         status_msg = status_update(shelter, response_df, status_msg)    # Call the helper function to get the latest status
