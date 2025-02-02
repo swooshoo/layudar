@@ -17,11 +17,15 @@ def wck_webscraper():
     # Step 1: Set up the Chrome WebDriver with Selenium
     options = Options()
     options = Options()
+    options.binary_location = "/usr/bin/chromium"
     options.add_argument("--headless")  # Updated headless mode
     options.add_argument("--no-sandbox")  # Avoid sandbox issues
     options.add_argument("--disable-dev-shm-usage")  # Fix shared memory issue
     options.add_argument("--disable-gpu")  # Disable GPU acceleration
-    service = ChromeService(ChromeDriverManager().install())
+    
+    chrome_driver_path = ChromeDriverManager().install()
+    service = ChromeService(chrome_driver_path)
+    
     driver = webdriver.Chrome(service=service, options=options)
 
     # Step 2: Navigate to the webpage
