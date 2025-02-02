@@ -5,3 +5,4 @@ streamlit==1.40.1
 gspread
 selenium
 webdriver-manager
+bs4
