@@ -1,6 +1,6 @@
 import streamlit as st
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
@@ -16,8 +16,14 @@ st.set_page_config(
 def wck_webscraper():
     # Step 1: Set up the Chrome WebDriver with Selenium
     options = Options()
-    options.headless = True  # Run in headless mode (no GUI)
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    options = Options()
+    options.add_argument("--headless=new")  # Updated headless mode
+    options.add_argument("--no-sandbox")  # Avoid sandbox issues
+    options.add_argument("--disable-dev-shm-usage")  # Fix shared memory issue
+    options.add_argument("--disable-gpu")  # Disable GPU acceleration
+    options.add_argument("--remote-debugging-port=9222")  # Enable debugging
+    service = ChromeService(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=options)
 
     # Step 2: Navigate to the webpage
     url = 'https://wck.org/news/meal-locations-ca'
