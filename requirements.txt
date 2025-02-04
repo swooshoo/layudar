@@ -3,7 +3,3 @@ protobuf==5.29.3
 st_gsheets_connection==0.1.0
 streamlit==1.40.1
 gspread
-selenium
-seleniumbase
-webdriver-manager
-bs4

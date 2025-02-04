@@ -2,12 +2,27 @@ import requests
 import json
 import pandas as pd
 import streamlit as st
+from bs4 import BeautifulSoup
 
 def wck_webscraper():
-    url = "https://wck.org/_next/data/9bT2ql8S3PlYf-75f4MDj/en-us/news/meal-locations-ca.json"
-    params = {"uid": "meal-locations-ca"}
+    r = requests.get("https://wck.org/news/meal-locations-ca")
+    soup = BeautifulSoup(r.text, "html.parser")
+    script_tags = soup.find_all("script", defer="")
 
-    r = requests.get(url)
+    build_id = None  # Initialize build_id to None
+
+    for tag in script_tags:
+        if tag.has_attr('src') and "_buildManifest.js" in tag['src']: # Check if 'src' exists
+            build_id = tag['src'].split("/")[-2]
+            break  # Exit the loop once you find it
+
+    if build_id is None:
+        print("Error: Could not find build ID.")  # Handle the case where it's not found
+        return  # Or raise an exception, or return a default value, as needed
+
+    r = requests.get(
+        f"https://wck.org/_next/data/{build_id}/en-us/news/meal-locations-ca.json?uid=meal-locations-ca"
+    )
 
     if r.status_code == 200:
         try:
