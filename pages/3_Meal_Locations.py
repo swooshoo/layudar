@@ -67,7 +67,7 @@ def wck_webscraper():
 
             if locations:
                 df = pd.DataFrame(locations)
-                st.dataframe(df)
+                #st.dataframe(df)
             else:
                 st.write("No meal location data found.")
 
@@ -81,18 +81,21 @@ def wck_webscraper():
     else:
         st.error(f"Request failed with status code: {r.status_code}")
         print(f"Request failed with status code: {r.status_code}")
+        
+    return df
 
 def main():
     homeicon, hometitle = st.columns([0.15,0.85])
     with homeicon:
         st.image("images/layudarlogo_large.png")
     with hometitle:
-        st.header("Meal Distribution Sites")
-        st.subheader("by World Central Kitchen", divider="gray")
-    st.caption("Daily Updated Meal Locations from the WCK website.")
+        st.header("WCK Meal Distribution Directory", divider="gray")
+    st.caption("Daily updated meal distribution sites by the World Central Kitchen")
     st.info("This page is still under development!")
     
-    wck_webscraper()
+    meal_df = wck_webscraper()
+    
+    st.dataframe(meal_df)
 
 if __name__ == "__main__":
     main()
