@@ -38,12 +38,12 @@ def wck_webscraper():
                                 lines = value.split('\n')
                                 if len(lines) >= 4:
                                     try:
-                                        name = lines[0].strip()
+                                        site = lines[0].strip()
                                         address = lines[1].strip()
                                         city = lines[2].strip()
                                         hours = lines[3].strip()
                                         yield {
-                                            "name": name,
+                                            "site": site,
                                             "address": address,
                                             "city": city,
                                             "hours": hours
@@ -84,18 +84,45 @@ def wck_webscraper():
         
     return df
 
+def render_meal_dir(site, address, city, hours):
+    with st.container(border=True):
+        st.subheader(site, divider="orange")
+        col1, col2, col3 = st.columns(3) #unused column for alignment purposes
+        with col1:
+            st.write(f"{city}")
+        with col3:
+            st.write(f"{hours}")
+            
+        st.code(f"{address}",wrap_lines=True)
+
 def main():
     homeicon, hometitle = st.columns([0.15,0.85])
     with homeicon:
         st.image("images/layudarlogo_large.png")
     with hometitle:
         st.header("WCK Meal Distribution Directory", divider="gray")
-    st.caption("Daily updated meal distribution sites by the World Central Kitchen")
-    st.info("This page is still under development!")
+        
+    tip1, tip2 = st.columns([.65,.35])
+    with tip1:
+        st.markdown(":material/public: By the [World Central Kitchen](https://wck.org/news/meal-locations-ca)")
+    with tip2:
+        st.caption("Copy an address with the :material/content_copy: button!")
     
     meal_df = wck_webscraper()
     
-    st.dataframe(meal_df)
+    cols_per_row = 2 # Number of cards per row
+    for i in range(0, len(meal_df), cols_per_row):
+        cols = st.columns(cols_per_row)  # Create columns for each row
+        for j, col in enumerate(cols):
+            if i + j < len(meal_df):  # Ensure no out-of-bounds access
+                row = meal_df.iloc[i + j]
+                with col:
+                    render_meal_dir(
+                        site=row['site'],
+                        address=row['address'],
+                        city=row['city'],
+                        hours=row['hours'],
+                    )
 
 if __name__ == "__main__":
     main()

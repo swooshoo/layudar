@@ -212,7 +212,7 @@ def render_shelter(shelter, city, address, email, opening_hour, closing_hour, ph
             st.markdown(f" :material/call: {phone_number}")
 
 def dropdown_tutorial():
-    with st.expander(":material/help: Getting Started"):
+    with st.expander(":material/help: How To Use This Page"):
         with st.container(border=True):
             st.subheader("Site Name")
             col1, col2 = st.columns(2)
